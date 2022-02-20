@@ -16,7 +16,8 @@ Install hardhat and start the hardhat network:
 npx hardhat node
 ```
 
-Before executing, make sure to export the hardhat network private key of the first account
+Before executing, make sure to export to .env the private key of the first account from the hardhat network
+
 example in .env:
 
 ```
@@ -26,6 +27,7 @@ export PRIVATE_KEY=0xaaaaaaaaaaaaaaaaaaa
 Then run
 
 ```
+source .env
 brownie run scripts/deploy.py
 ```
 
