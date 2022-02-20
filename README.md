@@ -4,19 +4,20 @@ This project demonstrates the reentrancy attack using brownie and hardhat networ
 The contract used is ReentrancyAttack from Solidy by Example site, https://solidity-by-example.org/hacks/re-entrancy/
 The ReentrancyAttack.sol contract is commented with console.log, showing different values during the execution of different functions in the contracts.
 
-Run
+Clone the repository
 
 ```
-brownie compile
+git clone https://.....
 ```
 
-Install hardhat and start the hardhat network:
+Install hardhat dependencies (npm install) and start the hardhat network:
 
 ```
+npm install
 npx hardhat node
 ```
 
-Before executing, make sure to export to .env the private key of the first account from the hardhat network
+Before executing deployments, make sure to export to .env the private key of the first account from the hardhat network
 
 example in .env:
 
