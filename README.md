@@ -31,3 +31,7 @@ brownie run scripts/deploy.py
 
 Watch the hardhat network console during the execution of calls in the brownie deploy.py
 It shows different values for contracts and accounts during calls.
+
+![hardhat_console_log](https://user-images.githubusercontent.com/88323108/154864715-c6a69c19-ddd8-42b1-8bab-1a9074e137a5.png)
+
+![brownie_script_log](https://user-images.githubusercontent.com/88323108/154864745-0d9e14c0-0795-4868-8cfe-209d6694d178.png)
