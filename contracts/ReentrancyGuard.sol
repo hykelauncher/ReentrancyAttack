@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: MIT
+<<<<<<< HEAD
 pragma solidity ^0.8.12;
+=======
+pragma solidity ^0.8.10;
+>>>>>>> 16c9c029a458b73eb26dd82cedd92d75b228e926
 
 contract ReentrancyGuard {
     bool internal locked;
@@ -11,6 +15,7 @@ contract ReentrancyGuard {
         locked = false;
     }
 }
+<<<<<<< HEAD
 
 contract ReentrancyGuard2 {
     uint256 private _guardCounter;
@@ -40,3 +45,5 @@ contract ReentrancyGuard2 {
 //     ...
 //   }
 // }
+=======
+>>>>>>> 16c9c029a458b73eb26dd82cedd92d75b228e926
