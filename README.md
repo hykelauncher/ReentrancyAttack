@@ -1,7 +1,7 @@
 # Reentrancy Attack with brownie and hardhat
 
 This project demonstrates the reentrancy attack using brownie and hardhat network
-The contract used is ReentrancyAttack from Solidy by Example site, https://solidity-by-example.org/hacks/re-entrancy/
+The contract used is ReentrancyAttack from [Solidy by Example site], (https://solidity-by-example.org/hacks/re-entrancy/)
 The ReentrancyAttack.sol contract is commented with console.log, showing different values during the execution of different functions in the contracts.
 
 Clone the repository
